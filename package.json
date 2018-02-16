@@ -1,0 +1,26 @@
+{
+  "name": "@kalarrs/cli",
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=9.0"
+  },
+  "description": "Quickly setup develoment enviroments",
+  "author": "Kalarrs Topham",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/exocom/kalarrs-cli"
+  },
+  "keywords": [
+    "serverless"
+  ],
+  "bin": {
+    "kalarrs": "bin/kalarrs.js"
+  },
+  "dependencies": {
+    "chalk": "^2.3.0",
+    "commander": "^2.12.2",
+    "inquirer": "^4.0.1",
+    "json2yaml": "^1.1.0"
+  }
+}
