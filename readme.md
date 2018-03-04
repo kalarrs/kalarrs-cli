@@ -32,7 +32,7 @@ yarn global add @kalarrs/cli
 ## Usage
 
 ```bash
-kalarrs help
+kalarrs --help
 ```
 
 ### Check and Install all necessary software to run serverless.
