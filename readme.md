@@ -89,7 +89,7 @@ awesome-sls-api/
 
 ### Additional Plugins
 
-Most plugins at this time are designed for use AWS only.
+Most plugins at this time are designed for use with AWS only.
 
 
 #### Solution Level
@@ -97,7 +97,7 @@ Most plugins at this time are designed for use AWS only.
 ##### [serverless-project-utils](https://github.com/exocom/serverless-project-utils)
 
 * Reverse Proxy - Enables running most of your API in the cloud while debugging flagged projects locally
-* Api Gateway Custom Domain name - easily create API Gateways add attach custom domains to them
+* Api Gateway Custom Domain name - easily create API Gateways and can attach custom domain names
 * Template Scaffold (Coming Soon)
 
 ``` bash

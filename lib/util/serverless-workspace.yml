@@ -1,0 +1,27 @@
+service:
+  name: workspace
+
+provider:
+  name: aws
+  environment: ${file(../.env/${self:provider.stage}.yml):provider.environment, file(.env/${self:provider.stage}.yml):provider.environment}
+  profile: default
+  region: us-west-2
+  stage: ${opt:stage, "dev"}
+  apiGatewayRestApiName: "api-${self:provider.stage}"
+
+plugins:
+  - "@kalarrs/serverless-shared-api-gateway"
+  - "@kalarrs/serverless-domain-manager"
+  - "@kalarrs/serverless-workspace-utils"
+
+custom:
+  user: ${file(serverless-user.yml):custom.user, file(../serverless-user.yml):custom.user}
+
+#  customDomain:
+#    domainName: ${file(../.env/${self:provider.stage}.yml):custom.customDomain.domainName, file(.env/${self:provider.stage}.yml):custom.customDomain.domainName}
+#    basePathMappings: ${file(../.env/${self:provider.stage}.yml):custom.customDomain.basePathMappings, file(.env/${self:provider.stage}.yml):custom.customDomain.basePathMappings}
+#    certificateName: ${file(../.env/${self:provider.stage}.yml):custom.customDomain.certificateName, file(.env/${self:provider.stage}.yml):custom.customDomain.certificateName}
+#    enabled: ${file(../.env/${self:provider.stage}.yml):custom.customDomain.enabled, file(.env/${self:provider.stage}.yml):custom.customDomain.enabled}
+#
+#    createRoute53Record: true
+#    endpointType: edge
