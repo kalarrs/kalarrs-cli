@@ -35,7 +35,7 @@ Both the CLI and generated project have dependencies that require Yarn, Node 9+,
 ## Installation
 
 ```bash
-yarn global add https://github.com/kalarrs/kalarrs-cli
+yarn global add @kalarrs/cli
 ```
 
 ## Usage
