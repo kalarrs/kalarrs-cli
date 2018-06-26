@@ -25,9 +25,8 @@ program
                 await programUtil.checkForYarnInstall();
                 await programUtil.checkForServerlessInstall();
                 await programUtil.checkForPythonInstall();
-                await programUtil.checkForAwsCliInstall();
-                await programUtil.checkForAwsProfile();
-
+                const hasAwsCli = await programUtil.checkForAwsCliInstall();
+                await programUtil.checkForAwsProfile(hasAwsCli);
                 break;
 
             default:
