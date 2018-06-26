@@ -24,8 +24,8 @@ program
                 await programUtil.checkForHomebrewInstall();
                 await programUtil.checkForYarnInstall();
                 await programUtil.checkForServerlessInstall();
-                await programUtil.checkForPythonInstall();
-                const hasAwsCli = await programUtil.checkForAwsCliInstall();
+                const hasPython = await programUtil.checkForPythonInstall();
+                const hasAwsCli = await programUtil.checkForAwsCliInstall(hasPython);
                 await programUtil.checkForAwsProfile(hasAwsCli);
                 break;
 

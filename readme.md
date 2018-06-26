@@ -2,24 +2,32 @@ Kalarrs Command-Line Interface
 ==============================
 CLI for setting up serverless on osx. Maybe linux is next? Docker?
 
-For those familar with .net @kalarrs/cli borrows from the naming convention of solutions and projects. The cli will help you get started using [serverless](https://github.com/serverless/serverless) on your development machine.
+For those familar with java @kalarrs/cli borrows from the naming convention of workspace and projects. The cli will help you get started using [serverless](https://github.com/serverless/serverless) on your development machine.
 By helping you get all of the required tooling installed, which for many is the hardest part of getting started with serverless.
 
-Once you have the tooling installed the cli will help you create and configure serverless solutions. A serverless solution contains many serverless projects, which together typically will form an api, however, it can be so much more. You are only limited by your imagination.
+Once you have the tooling installed the cli will help you create and configure serverless workspace. A serverless workspace contains many serverless projects, which together typically will form an api, however, it can be so much more. You are only limited by your imagination.
 
-The commands of the CLI borrows from yarn and npm where global is system level. All other commands are intended to be run in the solution level.
+Commands:
+
+* global
+* workspace
+* project
+
+Sub Commands:
+
+* global sls - configure your OSX machine to work with severless
 
 NOTE: For the best experience a complete set of [plugins](#additional-plugins) for serverless has been developed!
 
 ## Prerequisites
 
-Both the CLI and generated project have dependencies that require Yarn, Node 9+, hombrew (osx).
+Both the CLI and generated project have dependencies that require Yarn, Node 9+, hombrew (osx), and an AWS account.
 
 ## Table of Contents
 
 * [Installation](#installation)
 * [Usage](#usage)
-* [Solution Structure](#solution-structure)
+* [Workspace Structure](#workspace-structure)
 * [Additional Plugins](#additional-plugins)
 * [Getting Started](#getting-started)
 
@@ -42,22 +50,22 @@ kalarrs global sls
 ```
 
 
-### Create a serverless solution
+### Create a serverless workspace
 
 ```bash
-kalarrs sls create-solution awesome-sls-api
+kalarrs workspace create awesome-sls-api
 ```
 
 
-### Configure an existing serverless solution
+### Configure an existing serverless workspace
 
 ```bash
 cd awesome-sls-api
-kalarrs sls
+kalarrs workspace configure
 ```
 
 
-### Solution Structure
+### Workspace Structure
 
 ```
 awesome-sls-api/
@@ -92,7 +100,7 @@ awesome-sls-api/
 Most plugins at this time are designed for use with AWS only.
 
 
-#### Solution Level
+#### Workspace Level
 
 ##### [serverless-project-utils](https://github.com/exocom/serverless-project-utils)
 
@@ -119,7 +127,7 @@ yarn add @kalarrs/serverless-shared-api-gateway
 ##### [serverless-local-dev-server](https://github.com/exocom/serverless-local-dev-server)
 
 Allows you to run and debug some serverless projects locally.
-Supports binary, multiple projects, custom headers, Amazon services such as s3 and polly, aws profiles and settings, optional static hosting (local only)
+Supports binary, multiple projects, custom headers, Amazon services such as s3 and polly, AWS profiles and settings, optional static hosting (local only)
 
 ``` bash
 yarn add @kalarrs/serverless-local-dev-server
@@ -129,14 +137,3 @@ yarn add @kalarrs/serverless-local-dev-server
 ## Getting Started
 
 Checkout the TypeScript [serverless template](https://github.com/exocom/serverless-template-typescript)! This little gem will help you understand how to get an api up and running quickly.
-
-
-Inside of your new solution run:
-``` bash
-sls create --template https://github.com/exocom/serverless-template-typescript/tree/master/aws --path kittens
-```
-
-Using serverless-project-utils? (Coming Soon)
-``` bash
-sls project-create --template https://github.com/exocom/serverless-template-typescript/tree/master/aws --path kittens
-```
