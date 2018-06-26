@@ -11,11 +11,12 @@ Commands:
 
 * global
 * workspace
-* project
+* project (Coming Soon)
 
 Sub Commands:
 
-* global sls - configure your OSX machine to work with severless
+* global sls - Check and Install all necessary software to run serverless.
+* workspace init - Create a serverless workspace inside the current directory.
 
 NOTE: For the best experience a complete set of [plugins](#additional-plugins) for serverless has been developed!
 
@@ -34,7 +35,7 @@ Both the CLI and generated project have dependencies that require Yarn, Node 9+,
 ## Installation
 
 ```bash
-yarn global add @kalarrs/cli
+yarn global add https://github.com/kalarrs/kalarrs-cli
 ```
 
 ## Usage
@@ -50,17 +51,17 @@ kalarrs global sls
 ```
 
 
-### Create a serverless workspace
+### Create a serverless workspace inside the current directory.
 
 ```bash
-kalarrs workspace create awesome-sls-api
+kalarrs workspace init
 ```
 
 
-### Configure an existing serverless workspace
+### Configure an existing serverless workspace. (Coming Soon)
 
 ```bash
-cd awesome-sls-api
+cd awesome-sls-workspace
 kalarrs workspace configure
 ```
 
@@ -102,7 +103,7 @@ Most plugins at this time are designed for use with AWS only.
 
 #### Workspace Level
 
-##### [serverless-project-utils](https://github.com/exocom/serverless-project-utils)
+##### [serverless-project-utils](https://github.com/kalarrs/serverless-project-utils)
 
 * Reverse Proxy - Enables running most of your API in the cloud while debugging flagged projects locally
 * Api Gateway Custom Domain name - easily create API Gateways and can attach custom domain names
@@ -112,10 +113,19 @@ Most plugins at this time are designed for use with AWS only.
 yarn add @kalarrs/serverless-project-utils
 ```
 
+##### [serverless-domain-manager](https://github.com/kalarrs/serverless-domain-manager)
+
+Forked from amplify-education/serverless-domain-manager
+Allows you to run and debug some serverless projects locally.
+Supports binary, multiple projects, custom headers, Amazon services such as s3 and polly, AWS profiles and settings, optional static hosting (local only)
+
+``` bash
+yarn add @kalarrs/serverless-local-dev-server
+```
 
 #### Project Level
 
-##### [serverless-shared-api-gateway](https://github.com/exocom/serverless-shared-api-gateway)
+##### [serverless-shared-api-gateway](https://github.com/kalarrs/serverless-shared-api-gateway)
 
 Allows multiple serverless projects to share a single API. Critical for complex APIs and developing with multiple developers.
 
@@ -124,8 +134,9 @@ yarn add @kalarrs/serverless-shared-api-gateway
 ```
 
 
-##### [serverless-local-dev-server](https://github.com/exocom/serverless-local-dev-server)
+##### [serverless-local-dev-server](https://github.com/kalarrs/serverless-local-dev-server)
 
+Forked from DieProduktMacher/serverless-local-dev-server
 Allows you to run and debug some serverless projects locally.
 Supports binary, multiple projects, custom headers, Amazon services such as s3 and polly, AWS profiles and settings, optional static hosting (local only)
 
@@ -136,4 +147,6 @@ yarn add @kalarrs/serverless-local-dev-server
 
 ## Getting Started
 
-Checkout the TypeScript [serverless template](https://github.com/exocom/serverless-template-typescript)! This little gem will help you understand how to get an api up and running quickly.
+Checkout template projects written in TypeScript [serverless template-typescript](https://github.com/kalarrs/serverless-template-typescript)!
+
+Checkout template projects written in C# [serverless template-csharp](https://github.com/kalarrs/serverless-template-csharp)!

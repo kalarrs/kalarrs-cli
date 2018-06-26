@@ -35,25 +35,31 @@ program
     });
 
 program
-    .command('init')
+    .command('workspace <cmd>')
     .option('-p, --path <path>', 'path to workspace')
     .description('init a @kalarrs serverless workspace')
-    .action(async (path) => {
-        const workspaceDir = path || process.cwd();
+    .action(async (cmd, option, path) => {
+        switch (cmd.toLowerCase()) {
+            case 'init':
+                const workspaceDir = path || process.cwd();
 
-        await gitUtil.checkForInit();
-        await gitUtil.checkIfWorkspaceFilesIgnored();
+                await gitUtil.checkForInit();
+                await gitUtil.checkIfWorkspaceFilesIgnored();
 
-        //await webstormUtil.useES6(); // TODO : Add .idea/misc.xml which sets Javascript to ES6
-        //await webstormUtil.addEditorConfig(); // TODO: Add .editorconfig
+                //await webstormUtil.useES6(); // TODO : Add .idea/misc.xml which sets Javascript to ES6
+                //await webstormUtil.addEditorConfig(); // TODO: Add .editorconfig
 
-        await yarnUtil.checkForInit();
-        await yarnUtil.checkForWorkspaceDependencies();
-        await yarnUtil.installPackages();
+                await yarnUtil.checkForInit();
+                await yarnUtil.checkForWorkspaceDependencies();
+                await yarnUtil.installPackages();
 
-        await serverlessUtil.checkForWorkspaceUserYaml(workspaceDir);
-        await serverlessUtil.checkForWorkspaceDevEnvYaml(workspaceDir);
-        await serverlessUtil.checkForWorkspaceServerlessYaml(workspaceDir);
+                await serverlessUtil.checkForWorkspaceUserYaml(workspaceDir);
+                await serverlessUtil.checkForWorkspaceDevEnvYaml(workspaceDir);
+                await serverlessUtil.checkForWorkspaceServerlessYaml(workspaceDir);
+                break;
+            default:
+                throw new Error(`Unrecognized workspace command ${cmd}`);
+        }
     });
 
 program.parse(process.argv);
