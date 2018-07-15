@@ -56,7 +56,6 @@ program
 
                 await serverlessUtil.checkForWorkspaceUserYaml(workspacePath);
                 await serverlessUtil.checkForWorkspaceDevEnvYaml(workspacePath);
-                return;
                 await serverlessUtil.checkForWorkspaceServerlessYaml(workspacePath);
                 break;
             default:
