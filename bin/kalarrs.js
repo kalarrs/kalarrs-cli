@@ -51,7 +51,7 @@ program
                 //await webstormUtil.addEditorConfig(); // TODO: Add .editorconfig
 
                 const hasYarn = await yarnUtil.checkForInit(workspacePath);
-                if (hasYarn) await yarnUtil.checkForWorkspaceDependencies();
+                if (hasYarn) await yarnUtil.checkForWorkspaceDependencies(workspacePath);
                 if (hasYarn) await yarnUtil.installPackages();
 
                 await serverlessUtil.checkForWorkspaceUserYaml(workspacePath);
