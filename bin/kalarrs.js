@@ -2,6 +2,7 @@
 'use strict';
 
 const {version, description} = require('../package.json');
+const path = require('path');
 const program = require('commander');
 const programUtil = require('../lib/util/programs-util');
 const gitUtil = require('../lib/util/git-util');
@@ -13,9 +14,9 @@ program
     .description(description);
 
 program
-    .command('global <cmd>')
-    .action(async (cmd) => {
-        switch (cmd.toLowerCase()) {
+    .command('global <subCommand>')
+    .action(async (subCommand) => {
+        switch (subCommand.toLowerCase()) {
             case 'serverless':
             case 'sls':
                 if (!/^darwin/.test(process.platform)) throw 'This command can only be ran on OSX';
@@ -30,20 +31,21 @@ program
                 break;
 
             default:
-                throw new Error(`Unrecognized global command ${cmd}`);
+                throw new Error(`Unrecognized global command ${subCommand}`);
         }
     });
 
 program
-    .command('workspace <cmd>')
+    .command('workspace <subCommand>')
     .option('-p, --path <path>', 'path to workspace')
     .description('init a @kalarrs serverless workspace')
-    .action(async (cmd, option, path) => {
-        switch (cmd.toLowerCase()) {
+    .action(async (subCommand, cmd) => {
+        switch (subCommand.toLowerCase()) {
             case 'init':
-                const workspaceDir = path || process.cwd();
+                const workspacePath = cmd.path ? path.join(process.cwd(), cmd.path) : process.cwd();
 
-                await gitUtil.checkForInit();
+                await gitUtil.checkForInit(workspacePath);
+                return;
                 await gitUtil.checkIfWorkspaceFilesIgnored();
 
                 //await webstormUtil.useES6(); // TODO : Add .idea/misc.xml which sets Javascript to ES6
@@ -53,9 +55,9 @@ program
                 await yarnUtil.checkForWorkspaceDependencies();
                 await yarnUtil.installPackages();
 
-                await serverlessUtil.checkForWorkspaceUserYaml(workspaceDir);
-                await serverlessUtil.checkForWorkspaceDevEnvYaml(workspaceDir);
-                await serverlessUtil.checkForWorkspaceServerlessYaml(workspaceDir);
+                await serverlessUtil.checkForWorkspaceUserYaml(workspacePath);
+                await serverlessUtil.checkForWorkspaceDevEnvYaml(workspacePath);
+                await serverlessUtil.checkForWorkspaceServerlessYaml(workspacePath);
                 break;
             default:
                 throw new Error(`Unrecognized workspace command ${cmd}`);
