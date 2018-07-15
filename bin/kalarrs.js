@@ -46,16 +46,17 @@ program
 
                 const hasGit = await gitUtil.checkForInit(workspacePath);
                 if (hasGit) await gitUtil.checkIfWorkspaceFilesIgnored(workspacePath);
-                return;
+
                 //await webstormUtil.useES6(); // TODO : Add .idea/misc.xml which sets Javascript to ES6
                 //await webstormUtil.addEditorConfig(); // TODO: Add .editorconfig
 
-                await yarnUtil.checkForInit();
-                await yarnUtil.checkForWorkspaceDependencies();
-                await yarnUtil.installPackages();
+                const hasYarn = await yarnUtil.checkForInit(workspacePath);
+                if (hasYarn) await yarnUtil.checkForWorkspaceDependencies();
+                if (hasYarn) await yarnUtil.installPackages();
 
                 await serverlessUtil.checkForWorkspaceUserYaml(workspacePath);
                 await serverlessUtil.checkForWorkspaceDevEnvYaml(workspacePath);
+                return;
                 await serverlessUtil.checkForWorkspaceServerlessYaml(workspacePath);
                 break;
             default:
