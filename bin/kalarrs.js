@@ -44,10 +44,9 @@ program
             case 'init':
                 const workspacePath = cmd.path ? path.join(process.cwd(), cmd.path) : process.cwd();
 
-                await gitUtil.checkForInit(workspacePath);
+                const hasGit = await gitUtil.checkForInit(workspacePath);
+                if (hasGit) await gitUtil.checkIfWorkspaceFilesIgnored(workspacePath);
                 return;
-                await gitUtil.checkIfWorkspaceFilesIgnored();
-
                 //await webstormUtil.useES6(); // TODO : Add .idea/misc.xml which sets Javascript to ES6
                 //await webstormUtil.addEditorConfig(); // TODO: Add .editorconfig
 
