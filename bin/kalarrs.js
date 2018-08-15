@@ -99,11 +99,9 @@ program
                 if (projectFolderName !== cmd.name) throw new Error('project name and the path do not match.');
                 const workspaceFolderName = path.basename(workspacePath);
 
-                // TODO : Project commands :)
-                // `dotnet new classlib -lang c# -f netcoreapp2.0 --name ${projectName}`
-                // TODO : move to src folder...
-
-                // TODO : make src, local, & test (Configurable?)
+                const projectSrcPath = path.join(projectPath,'/src');
+                const projectTestPath = path.join(projectPath,'/test');
+                const projectLocalSrc = path.join(projectPath,'/local');
 
                 // TODO : Link project to project solution
                 // TODO : Link project to workspace solution
@@ -120,9 +118,33 @@ program
                         });
 
                         const hasProjectSolution = await dotnetUtil.checkForSolution({
-                            srcPath: workspacePath,
+                            srcPath: projectPath,
                             solutionName: projectFolderName
                         });
+
+                        const hasProject = await dotnetUtil.checkForProject({
+                            srcPath: projectSrcPath,
+                            projectName: cmd.name,
+                            type: 'classlib'
+                        });
+                        if (hasProject) {
+                            await dotnetUtil.addPackage({srcPath: projectPath, packageName: 'Amazon.Lambda.APIGatewayEvents'});
+                            await dotnetUtil.addPackage({srcPath: projectPath, packageName: 'Amazon.Lambda.Core'});
+                            await dotnetUtil.addPackage({srcPath: projectPath, packageName: 'Amazon.Lambda.Serialization.Json'});
+                        }
+                        /*
+                        const hasProjectTest = await dotnetUtil.checkForProject({
+                            srcPath: projectTestPath,
+                            projectName: cmd.name + '.local',
+                            type: 'classlib'
+                        });
+
+                        const hasProjectLocal = await dotnetUtil.checkForProject({
+                            srcPath: projectLocalSrc,
+                            projectName: cmd.name + '.test',
+                            type: 'console'
+                        });
+                        */
 
                         break;
                     default:
