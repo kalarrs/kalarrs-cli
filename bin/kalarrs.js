@@ -19,13 +19,11 @@ program
         switch (subCommand.toLowerCase()) {
             case 'serverless':
             case 'sls':
-                if (!/^darwin/.test(process.platform)) throw 'This command can only be ran on OSX';
-
                 await programUtil.checkNodeVersion(9);
-                await programUtil.checkForHomebrewInstall();
+                if (process.platform === 'darwin') await programUtil.checkForHomebrewInstall();
                 await programUtil.checkForYarnInstall();
                 await programUtil.checkForServerlessInstall();
-                const hasPython = await programUtil.checkForPythonInstall();
+                const hasPython = process.platform === 'darwin' ? await programUtil.checkForPythonInstall() : null;
                 const hasAwsCli = await programUtil.checkForAwsCliInstall(hasPython);
                 await programUtil.checkForAwsProfile(hasAwsCli);
                 break;
