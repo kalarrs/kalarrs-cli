@@ -23,6 +23,7 @@ program
                 if (process.platform === 'darwin') await programUtil.checkForHomebrewInstall();
                 await programUtil.checkForYarnInstall();
                 await programUtil.checkForServerlessInstall();
+                await programUtil.checkForDotNetCoreCliInstall();
                 const hasPython = process.platform === 'darwin' ? await programUtil.checkForPythonInstall() : null;
                 const hasAwsCli = await programUtil.checkForAwsCliInstall(hasPython);
                 await programUtil.checkForAwsProfile(hasAwsCli);
