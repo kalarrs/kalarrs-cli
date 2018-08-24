@@ -83,6 +83,7 @@ program
             serverless.processedInput.options.stage = await new PromptList({
                 name: 'stage',
                 message: 'Which stage would you like to deploy to?',
+                default: 0,
                 choices: ['dev', 'prod']
             }).run();
         }
