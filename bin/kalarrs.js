@@ -8,7 +8,6 @@ const programUtil = require('../lib/util/programs-util');
 const gitUtil = require('../lib/util/git-util');
 const yarnUtil = require('../lib/util/yarn-util');
 const serverlessUtil = require('../lib/util/serverless-util');
-const PromptList = require('prompt-list');
 
 program
     .version(version)
@@ -74,19 +73,16 @@ program
     .option('--conceal', 'Hides secrets from the output (e.g. API Gateway key values).')
     .option('--aws-s3-accelerate', 'Enables S3 Transfer Acceleration making uploading artifacts much faster. It requires additional s3:PutAccelerateConfiguration permissions. Note: When using Transfer Acceleration, additional data transfer charges may apply.')
     .option('--no-aws-s3-accelerate', 'Explicitly disables S3 Transfer Acceleration). It also requires additional s3:PutAccelerateConfiguration permissions.')
-    .action(async () => {
-        // TODO : pull from project/workspace/globally.
-        const Serverless = require(path.join(process.cwd(), '../node_modules', 'serverless'));
+    .action(async (stage) => {
+        if (typeof stage !== 'string') {
+            const selectedStage = await serverlessUtil.promptForStage();
+            process.argv.push('-s');
+            process.argv.push(selectedStage);
+        }
+
+        const Serverless = require(await serverlessUtil.requireServerlessPath());
         const serverless = new Serverless({servicePath: process.cwd()});
         await serverless.init();
-        if (!serverless.processedInput.options.stage) {
-            serverless.processedInput.options.stage = await new PromptList({
-                name: 'stage',
-                message: 'Which stage would you like to deploy to?',
-                default: 0,
-                choices: ['dev', 'prod']
-            }).run();
-        }
         await serverless.run();
     });
 
