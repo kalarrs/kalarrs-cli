@@ -19,7 +19,7 @@ program
         switch (subCommand.toLowerCase()) {
             case 'serverless':
             case 'sls':
-                await programUtil.checkNodeVersion(9);
+                await programUtil.checkNodeVersion(8.10);
                 if (process.platform === 'darwin') await programUtil.checkForHomebrewInstall();
                 await programUtil.checkForYarnInstall();
                 await programUtil.checkForServerlessInstall();
