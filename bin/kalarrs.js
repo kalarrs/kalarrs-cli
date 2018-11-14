@@ -83,12 +83,12 @@ program
                 */
 
                 const workspacePath = cmd.path ? path.join(process.cwd(), cmd.path) : process.cwd();
-                const projetName = await projectUtil.projectName();
-                const projectPath = path.join(workspacePath, projetName);
+                const projectName = await projectUtil.projectName();
+                const projectPath = path.join(workspacePath, projectName);
                 const projectLanguage = await projectUtil.projectLanguage();
                 const template = await projectUtil.template(projectLanguage);
-                const tempalteUrl = `https://github.com/kalarrs/serverless-template-${projectLanguage}/tree/master/aws/${template}`;
-                await serverlessUtil.create(tempalteUrl, projectPath);
+                const templateUrl = `https://github.com/kalarrs/serverless-template-${projectLanguage}/tree/master/aws/${template}`;
+                await serverlessUtil.create(templateUrl, projectName);
 
                 if (projectLanguage === 'typescript') {
 
