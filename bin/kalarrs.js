@@ -62,4 +62,23 @@ program
         }
     });
 
+program
+    .command('project <subCommand>')
+    .option('-p, --path <path>', 'path to workspace')
+    .description('create a @kalarrs serverless project from a template')
+    .action(async (subCommand, cmd) => {
+        switch (subCommand.toLowerCase()) {
+            case 'new':
+                const workspacePath = cmd.path ? path.join(process.cwd(), cmd.path) : process.cwd();
+                const projectPath = path.join(workspacePath, 'foo');
+
+                const hasYarn = await yarnUtil.checkForInit(workspacePath);
+                if (hasYarn) await yarnUtil.installPackages();
+
+                break;
+            default:
+                throw new Error(`Unrecognized project command ${cmd}`);
+        }
+    });
+
 program.parse(process.argv);
