@@ -69,6 +69,18 @@ program
     .action(async (subCommand, cmd) => {
         switch (subCommand.toLowerCase()) {
             case 'new':
+
+                /* TODO: Creating a project
+                    Input project name.
+                    Choose template type.
+                    Choose template (hard coded list for now. Later can read from github.)
+                    Clone using sls cli.
+                    Check workspace for typescript in workspace if cloning from 'typescript' if not install latest typescript
+                    Yarn install after cloning
+                    Configure .idea for ts
+                    Configure .idea for project folders :)
+                */
+
                 const workspacePath = cmd.path ? path.join(process.cwd(), cmd.path) : process.cwd();
                 const projectPath = path.join(workspacePath, 'foo');
 
