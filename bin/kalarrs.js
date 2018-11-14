@@ -8,6 +8,7 @@ const programUtil = require('../lib/util/programs-util');
 const gitUtil = require('../lib/util/git-util');
 const yarnUtil = require('../lib/util/yarn-util');
 const serverlessUtil = require('../lib/util/serverless-util');
+const projectUtil = require('../lib/util/project-util');
 
 program
     .version(version)
@@ -51,7 +52,7 @@ program
 
                 const hasYarn = await yarnUtil.checkForInit(workspacePath);
                 if (hasYarn) await yarnUtil.checkForWorkspaceDependencies(workspacePath);
-                if (hasYarn) await yarnUtil.installPackages();
+                if (hasYarn) await yarnUtil.installPackages(workspacePath);
 
                 await serverlessUtil.checkForWorkspaceUserYaml(workspacePath);
                 await serverlessUtil.checkForWorkspaceDevEnvYaml(workspacePath);
@@ -82,15 +83,28 @@ program
                 */
 
                 const workspacePath = cmd.path ? path.join(process.cwd(), cmd.path) : process.cwd();
-                const projectPath = path.join(workspacePath, 'foo');
+                const projetName = await projectUtil.projectName();
+                const projectPath = path.join(workspacePath, projetName);
+                const projectLanguage = await projectUtil.projectLanguage();
+                const template = await projectUtil.template(projectLanguage);
+                const tempalteUrl = `https://github.com/kalarrs/serverless-template-${projectLanguage}/tree/master/aws/${template}`;
+                await serverlessUtil.create(tempalteUrl, projectPath);
 
-                const hasYarn = await yarnUtil.checkForInit(workspacePath);
-                if (hasYarn) await yarnUtil.installPackages();
+                if (projectLanguage === 'typescript') {
+
+                }
+
+                const hasYarn = await yarnUtil.checkForInit(projectPath);
+                if (hasYarn) await yarnUtil.installPackages(projectPath);
+
+                //await webstormUtil.autoCompileTypeScript(); // TODO : Add .idea/misc.xml which sets TypeScript to autocompile
+                //await webstormUtil.configureProjectSourceFolders(); // TODO: Configure .idea/ to set sourceRoot on project dir and project/src dir
 
                 break;
             default:
                 throw new Error(`Unrecognized project command ${cmd}`);
         }
     });
+// --language=c# --name=foo
 
 program.parse(process.argv);
