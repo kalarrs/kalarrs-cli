@@ -68,16 +68,12 @@ program
     .option('-p, --path <path>', 'path to workspace')
     .description('create a @kalarrs serverless project from a template')
     .action(async (subCommand, cmd) => {
+        // WOOT
+        // https://stackoverflow.com/questions/42480949/what-do-the-curly-braces-do-in-switch-statement-after-case-in-es6
         switch (subCommand.toLowerCase()) {
             case 'new':
-
-                /* TODO: Creating a project
-                    Input project name.
-                    Choose template type.
-                    Choose template (hard coded list for now. Later can read from github.)
-                    Clone using sls cli.
-                    Check workspace for typescript in workspace if cloning from 'typescript' if not install latest typescript
-                    Yarn install after cloning
+            case 'create': {
+                /*
                     Configure .idea for ts
                     Configure .idea for project folders :)
                 */
@@ -90,17 +86,37 @@ program
                 const templateUrl = `https://github.com/kalarrs/serverless-template-${projectLanguage}/tree/master/aws/${template}`;
                 await serverlessUtil.create(templateUrl, projectName);
 
-                if (projectLanguage === 'typescript') {
-
-                }
-
                 const hasYarn = await yarnUtil.checkForInit(projectPath);
                 if (hasYarn) await yarnUtil.installPackages(projectPath);
+
+                if (projectLanguage === 'typescript') {
+                    const hasYarn = await yarnUtil.checkForInit(workspacePath);
+                    if (hasYarn) await yarnUtil.checkForWorkspaceTypeScriptDependencies(workspacePath);
+                }
 
                 //await webstormUtil.autoCompileTypeScript(); // TODO : Add .idea/misc.xml which sets TypeScript to autocompile
                 //await webstormUtil.configureProjectSourceFolders(); // TODO: Configure .idea/ to set sourceRoot on project dir and project/src dir
 
                 break;
+            }
+            case 'init': {
+                const projectPath = cmd.path ? path.join(process.cwd(), cmd.path) : process.cwd();
+                const workspacePath = path.join(projectPath, '../');
+                const projectLanguage = await projectUtil.projectLanguage();
+
+                const hasYarn = await yarnUtil.checkForInit(projectPath);
+                if (hasYarn) await yarnUtil.installPackages(projectPath);
+
+                if (projectLanguage === 'typescript') {
+                    const hasYarn = await yarnUtil.checkForInit(workspacePath);
+                    if (hasYarn) await yarnUtil.checkForWorkspaceTypeScriptDependencies(workspacePath);
+                }
+
+                //await webstormUtil.autoCompileTypeScript(); // TODO : Add .idea/misc.xml which sets TypeScript to autocompile
+                //await webstormUtil.configureProjectSourceFolders(); // TODO: Configure .idea/ to set sourceRoot on project dir and project/src dir
+
+                break;
+            }
             default:
                 throw new Error(`Unrecognized project command ${cmd}`);
         }
