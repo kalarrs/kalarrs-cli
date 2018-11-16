@@ -103,6 +103,7 @@ program
             case 'init': {
                 const projectPath = cmd.path ? path.join(process.cwd(), cmd.path) : process.cwd();
                 const workspacePath = path.join(projectPath, '../');
+                // TODO : Autodetect and fallback to asking if not detected.
                 const projectLanguage = await projectUtil.projectLanguage();
 
                 const hasYarn = await yarnUtil.checkForInit(projectPath);
