@@ -92,6 +92,7 @@ program
                 if (projectLanguage === 'typescript') {
                     const hasYarn = await yarnUtil.checkForInit(workspacePath);
                     if (hasYarn) await yarnUtil.checkForWorkspaceTypeScriptDependencies(workspacePath);
+                    await gitUtil.cloneWorkspaceTypescriptLibs(workspacePath);
                 }
 
                 //await webstormUtil.autoCompileTypeScript(); // TODO : Add .idea/misc.xml which sets TypeScript to autocompile
@@ -110,6 +111,7 @@ program
                 if (projectLanguage === 'typescript') {
                     const hasYarn = await yarnUtil.checkForInit(workspacePath);
                     if (hasYarn) await yarnUtil.checkForWorkspaceTypeScriptDependencies(workspacePath);
+                    await gitUtil.cloneWorkspaceTypescriptLibs(workspacePath);
                 }
 
                 //await webstormUtil.autoCompileTypeScript(); // TODO : Add .idea/misc.xml which sets TypeScript to autocompile
