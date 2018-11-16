@@ -93,6 +93,10 @@ program
                     const hasYarn = await yarnUtil.checkForInit(workspacePath);
                     if (hasYarn) await yarnUtil.checkForWorkspaceTypeScriptDependencies(workspacePath);
                     await gitUtil.cloneWorkspaceTypescriptLibs(workspacePath);
+                    const lambdaUtil = path.join(workspacePath,'libs/lambda-util');
+                    await yarnUtil.installPackages(lambdaUtil);
+                    const mongooseUtil = path.join(workspacePath,'libs/mongoose-util');
+                    await yarnUtil.installPackages(mongooseUtil);
                 }
 
                 //await webstormUtil.autoCompileTypeScript(); // TODO : Add .idea/misc.xml which sets TypeScript to autocompile
@@ -113,6 +117,10 @@ program
                     const hasYarn = await yarnUtil.checkForInit(workspacePath);
                     if (hasYarn) await yarnUtil.checkForWorkspaceTypeScriptDependencies(workspacePath);
                     await gitUtil.cloneWorkspaceTypescriptLibs(workspacePath);
+                    const lambdaUtil = path.join(workspacePath,'libs/lambda-util');
+                    await yarnUtil.installPackages(lambdaUtil);
+                    const mongooseUtil = path.join(workspacePath,'libs/mongoose-util');
+                    await yarnUtil.installPackages(mongooseUtil);
                 }
 
                 //await webstormUtil.autoCompileTypeScript(); // TODO : Add .idea/misc.xml which sets TypeScript to autocompile
