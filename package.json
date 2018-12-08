@@ -15,6 +15,7 @@
     "serverless"
   ],
   "bin": {
+    "kls": "bin/kalarrs.js",
     "kalarrs": "bin/kalarrs.js"
   },
   "dependencies": {
