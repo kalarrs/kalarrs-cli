@@ -44,6 +44,11 @@ program
             case 'init':
                 const workspacePath = cmd.path ? join(process.cwd(), cmd.path) : process.cwd();
 
+                const projectLanguages = await projectUtil.projectLanguage(true);
+                if (projectLanguages.includes('typescript')) {
+                    await projectUtil.checkForTsconfig(workspacePath);
+                }
+
                 const hasGit = await gitUtil.checkForInit(workspacePath);
                 if (hasGit) await gitUtil.checkIfWorkspaceFilesIgnored(workspacePath);
 
