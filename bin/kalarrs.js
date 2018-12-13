@@ -51,8 +51,7 @@ program
                 //await webstormUtil.addEditorConfig(); // TODO: Add .editorconfig
 
                 const hasYarn = await yarnUtil.checkForInit(workspacePath);
-                if (hasYarn) await yarnUtil.checkForWorkspaceDevDependencies(workspacePath);
-                if (hasYarn) await yarnUtil.install(workspacePath);
+                if (hasYarn) await yarnUtil.compareAndInstallPackages(workspacePath, yarnUtil.workspaceDevDependencies, true);
 
                 await serverlessUtil.checkForWorkspaceUserYaml(workspacePath);
                 await serverlessUtil.checkForWorkspaceDevEnvYaml(workspacePath);
@@ -90,8 +89,8 @@ program
                 const {dependencies, devDependencies} = projectPackage;
 
                 // Install dependencies and devDependencies into workspace, use layers to deploy dependencies to aws
-                if (dependencies) await yarnUtil.installPackages(workspacePath, Object.keys(dependencies));
-                if (devDependencies) await yarnUtil.installPackages(workspacePath, Object.keys(devDependencies), true);
+                if (dependencies) await yarnUtil.compareAndInstallPackages(workspacePath, Object.keys(dependencies));
+                if (devDependencies) await yarnUtil.compareAndInstallPackages(workspacePath, Object.keys(devDependencies), true);
 
                 // Remove dependencies and devDependencies from project
                 await yarnUtil.savePackage(projectPath, {
@@ -118,8 +117,8 @@ program
                 const {dependencies, devDependencies} = projectPackage;
 
                 // Install dependencies and devDependencies into workspace, use layers to deploy dependencies to aws
-                if (dependencies) await yarnUtil.installPackages(workspacePath, Object.keys(dependencies));
-                if (devDependencies) await yarnUtil.installPackages(workspacePath, Object.keys(devDependencies), true);
+                if (dependencies) await yarnUtil.compareAndInstallPackages(workspacePath, Object.keys(dependencies));
+                if (devDependencies) await yarnUtil.compareAndInstallPackages(workspacePath, Object.keys(devDependencies), true);
 
                 // Remove dependencies and devDependencies from project
                 await yarnUtil.savePackage(projectPath, {
